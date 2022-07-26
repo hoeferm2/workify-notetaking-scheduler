@@ -1,4 +1,3 @@
-
 let noteTitle;
 let noteText;
 let saveNoteBtn;
@@ -69,6 +68,7 @@ const renderActiveNote = () => {
 
 const handleNoteSave = () => {
   const newNote = {
+
     title: noteTitle.value,
     text: noteText.value,
   };
@@ -87,7 +87,7 @@ const handleNoteDelete = (e) => {
   console.log(e.target);
   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
   console.log(noteId)
-
+  console.log(activeNote.id)
   if (activeNote.id === noteId) {
     activeNote = {};
   }

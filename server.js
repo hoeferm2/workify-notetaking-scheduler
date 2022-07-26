@@ -61,25 +61,15 @@ app.post("/api/notes", (req, res) => {
 )
 app.delete("/api/notes/:id", (req, res) => {
 
-    fs.readFile("./public/db/notes.json", "utf8", (err, data) => {
-        if (err) {
-            throw err
-        } else {
-            const notes = JSON.parse(data);
-            console.log(notes)
-            fs.writeFile("./public/db/notes.json", JSON.stringify(notes, null, 4), (err, data) => {
-                if (err) {
-                    throw err;
-                }
-                res.json({ data: req.body, message: "success!" }
+    let ourNotes = JSON.parse(fs.readFileSync("./public/db/notes.json"))
+    const deletedNote = (req.params.id).toString()
 
-                )
-            })
-        }
-    }
-    )
-}
-)
+    ourNotes = ourNotes.filter(eraseSelectedNote => {
+        return eraseSelectedNote.id != deletedNote
+    })
+    fs.writeFileSync("./public/db/notes.json", JSON.stringify(ourNotes)),
+        res.json(ourNotes)
+})
 
 
 app.listen(PORT, () => {
